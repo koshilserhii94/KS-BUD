@@ -1,12 +1,135 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KS-BUD</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KS-BUD — Управление компанией</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101722;color:#f4f6fa;font-family:Arial,sans-serif}
+header{background:#192536;padding:22px 18px;border-bottom:1px solid #34445b}
+.logo{font-size:27px;font-weight:900;color:#79aaff}
+header p{color:#aab7c9;margin:7px 0 0}
+main{padding:18px;max-width:900px;margin:auto}
+h2{font-size:21px;margin:24px 0 14px}
+.welcome{font-size:23px;font-weight:bold;margin-bottom:5px}
+.muted{color:#9caabe;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:#1b293b;padding:17px;border:1px solid #30435c;border-radius:13px}
+.card .number{font-size:25px;font-weight:bold;margin-top:12px}
+.blue{color:#80adff}
+.green{color:#58d69a}
+.orange{color:#ffbd68}
+.worker{display:flex;justify-content:space-between;align-items:center;margin:9px 0}
+.worker strong{display:block;margin-bottom:5px}
+.status{font-size:12px;color:#58d69a}
+button{background:#3478dc;color:white;border:0;padding:12px 15px;border-radius:9px;font-size:14px;cursor:pointer}
+input,select{width:100%;padding:12px;background:#101c2b;border:1px solid #40516b;color:white;border-radius:8px;margin:7px 0 13px}
+label{font-size:13px;color:#bac6d7}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+nav button{background:#263850;padding:12px 5px}
+section{scroll-margin-top:15px}
+.activity{padding:12px 0;border-bottom:1px solid #34445b}
+footer{text-align:center;color:#75849a;padding:30px;font-size:12px}
+@media(max-width:400px){main{padding:12px}.card{padding:12px}.number{font-size:21px}}
+</style>
 </head>
 <body>
-  <h1>KS-BUD</h1>
-  <p>Управление строительной компанией</p>
+<header>
+<div class="logo">KS-BUD</div>
+<p>Система управления строительной компанией</p>
+</header>
+<main>
+<div class="welcome">Добро пожаловать!</div>
+<div class="muted">Панель управления администратора</div>
+
+<nav>
+<button onclick="go('workers')">Работники</button>
+<button onclick="go('objects')">Объекты</button>
+<button onclick="go('finance')">Финансы</button>
+</nav>
+
+<h2>Общая информация</h2>
+<div class="cards">
+<div class="card">
+<div class="muted">Работники</div>
+<div class="number blue">4</div>
+</div>
+<div class="card">
+<div class="muted">Активные объекты</div>
+<div class="number green">0</div>
+</div>
+<div class="card">
+<div class="muted">Расходы</div>
+<div class="number orange">0 zł</div>
+</div>
+<div class="card">
+<div class="muted">Доходы</div>
+<div class="number green">0 zł</div>
+</div>
+</div>
+
+<section id="workers">
+<h2>Наши работники</h2>
+<div class="card">
+<div class="worker"><div><strong>Марьян</strong><span class="status">Работник</span></div><span>👷</span></div>
+<div class="worker"><div><strong>Станислав</strong><span class="status">Работник</span></div><span>👷</span></div>
+<div class="worker"><div><strong>Ярослав</strong><span class="status">Работник</span></div><span>👷</span></div>
+<div class="worker"><div><strong>Влад</strong><span class="status">Работник</span></div><span>👷</span></div>
+</div>
+</section>
+
+<section id="objects">
+<h2>Строительные объекты</h2>
+<div class="card">
+<p class="muted">Список объектов KS-BUD</p>
+<p>Пока нет добавленных объектов.</p>
+</div>
+</section>
+
+<section id="finance">
+<h2>Финансы компании</h2>
+<div class="cards">
+<div class="card"><div class="muted">Зарплаты</div><div class="number">0 zł</div></div>
+<div class="card"><div class="muted">Авансы</div><div class="number">0 zł</div></div>
+</div>
+</section>
+
+<section>
+<h2>Учёт рабочего времени</h2>
+<div class="card">
+<label>Работник</label>
+<select id="person">
+<option>Марьян</option>
+<option>Станислав</option>
+<option>Ярослав</option>
+<option>Влад</option>
+</select>
+<label>Количество отработанных часов</label>
+<input id="hours" type="number" min="0" max="24" placeholder="Например, 8">
+<button onclick="addHours()">Добавить часы</button>
+<div id="result" class="activity"></div>
+</div>
+</section>
+
+<footer>KS-BUD © 2026 | Управление строительной компанией</footer>
+</main>
+<script>
+function go(id){
+document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+function addHours(){
+let person=document.getElementById('person').value;
+let hours=Number(document.getElementById('hours').value);
+if(!hours||hours<0||hours>24){
+alert('Введите правильное количество часов');
+return;
+}
+document.getElementById('result').innerHTML=
+'Добавлено: '+person+' — '+hours+' часов';
+document.getElementById('hours').value='';
+}
+</script>
 </body>
 </html>
