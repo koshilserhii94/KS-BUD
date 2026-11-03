@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KS-BUD — Управление компанией</title>
+<title>KS-BUD — Управление компанией<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#192536">
+<meta name="apple-mobile-web-app-capable" content="yes"></title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101722;color:#f4f6fa;font-family:Arial,sans-serif}
@@ -129,6 +131,13 @@ return;
 document.getElementById('result').innerHTML=
 'Добавлено: '+person+' — '+hours+' часов';
 document.getElementById('hours').value='';
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js');
+  });
 }
 </script>
 </body>
