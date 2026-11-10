@@ -11,15 +11,15 @@
   "background_color": "#101722",
   "theme_color": "#192536",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  {
+    "src": "icons/KS-BUD-icon-192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "icons/KS-BUD-icon-512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
+]
 }
