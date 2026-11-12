@@ -186,7 +186,35 @@ function addHours(){
 
   document.getElementById('hours').value = '';
 }
+function loadWorkEntries() {
+    const entries = JSON.parse(
+        localStorage.getItem('ksBudWorkEntries') || '[]'
+    );
 
+    const person = document.getElementById('person').value;
+
+    const personEntries = entries.filter(
+        e => e.person === person
+    );
+
+    const totalHours = personEntries.reduce(
+        (sum, e) => sum + e.hours, 0
+    );
+
+    const totalPay = personEntries.reduce(
+        (sum, e) => sum + e.amount, 0
+    );
+
+    if (personEntries.length > 0) {
+        document.getElementById('result').innerHTML =
+            'Сохранено записей: ' + personEntries.length +
+            '<br>Работник: ' + person +
+            '<br>Всего часов: ' + totalHours +
+            '<br>Начислено: ' + totalPay + ' zł';
+    }
+}
+
+loadWorkEntries();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
