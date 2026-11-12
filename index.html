@@ -75,13 +75,21 @@ footer{text-align:center;color:#75849a;padding:30px;font-size:12px}
 <section id="workers">
 <h2>Наши работники</h2>
 <div class="card">
-<div class="worker"><div><strong>Марьян</strong><span class="status">Работник</span></div><span>👷</span></div>
-<div class="worker"><div><strong>Станислав</strong><span class="status">Работник</span></div><span>👷</span></div>
-<div class="worker"><div><strong>Ярослав</strong><span class="status">Работник</span></div><span>👷</span></div>
-<div class="worker"><div><strong>Влад</strong><span class="status">Работник</span></div><span>👷</span></div>
+<div class="worker">
+  <div><strong>Стас</strong><br><span class="muted">Ставка: 32 zł/час</span></div>
 </div>
-</section>
+<div class="worker">
+  <div><strong>Марьян</strong><br><span class="muted">Ставка: 32 zł/час</span></div>
+</div>
+<div class="worker">
+  <div><strong>Ярослав</strong><br><span class="muted">Ставка: 32 zł/час</span></div>
+</div>
+<div class="worker">
+  <div><strong>Влад</strong><br><span class="muted">Ставка: 30 zł/час</span></div>
+</div>
 
+</div>
+ </section> 
 <section id="objects">
 <h2>Строительные объекты</h2>
 <div class="card">
@@ -121,17 +129,64 @@ footer{text-align:center;color:#75849a;padding:30px;font-size:12px}
 function go(id){
 document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
+
 function addHours(){
-let person=document.getElementById('person').value;
-let hours=Number(document.getElementById('hours').value);
-if(!hours||hours<0||hours>24){
-alert('Введите правильное количество часов');
-return;
+  const person = document.getElementById('person').value;
+  const hours = Number(document.getElementById('hours').value);
+
+  const rates = {
+    'Станислав': 32,
+    'Марьян': 32,
+    'Ярослав': 32,
+    'Влад': 30
+  };
+
+  if(!hours || hours <= 0 || hours > 24){
+    alert('Введите правильное количество часов');
+    return;
+  }
+
+  const rate = rates[person];
+  const amount = hours * rate;
+
+  const entries = JSON.parse(
+    localStorage.getItem('ksBudWorkEntries') || '[]'
+  );
+
+  const date = new Date().toLocaleDateString('pl-PL');
+
+  entries.push({
+    person,
+    hours,
+    rate,
+    amount,
+    date
+  });
+
+  localStorage.setItem(
+    'ksBudWorkEntries',
+    JSON.stringify(entries)
+  );
+
+  const totalHours = entries
+    .filter(e => e.person === person)
+    .reduce((sum, e) => sum + e.hours, 0);
+
+  const totalPay = entries
+    .filter(e => e.person === person)
+    .reduce((sum, e) => sum + e.amount, 0);
+
+  document.getElementById('result').innerHTML =
+    'Добавлено: ' + person +
+    '<br>Часы: ' + hours +
+    '<br>Ставка: ' + rate + ' zł/час' +
+    '<br>За смену: ' + amount + ' zł' +
+    '<br>Всего часов: ' + totalHours +
+    '<br>Начислено: ' + totalPay + ' zł';
+
+  document.getElementById('hours').value = '';
 }
-document.getElementById('result').innerHTML=
-'Добавлено: '+person+' — '+hours+' часов';
-document.getElementById('hours').value='';
-}
+
 </script>
 <script>
 if ('serviceWorker' in navigator) {
